@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-// import ListingCard from "./ListingCard";
+import React, { useEffect, useState } from "react";
+import ListingCard from "./ListingCard";
 
 function ListingsContainer() {
   const [listings, setListings] = useState([])
@@ -10,8 +10,16 @@ function ListingsContainer() {
       .then(listings => setListings(listings))
   }, [])
 
+  function handleDeleteListing(id){
+    const updatedListingArray = listings.filter(listing => listing.id !== id)
+    setListings(updatedListingArray)
+  }
   const listingCards = listings.map(listingObj => {
-    return <ListingCard key={listingObj.id} listing={listingObj} />
+    return <ListingCard 
+      key={listingObj.id} 
+      listing={listingObj}
+      onDeleteListing={handleDeleteListing}
+    />
   })
   return (
     <main>
